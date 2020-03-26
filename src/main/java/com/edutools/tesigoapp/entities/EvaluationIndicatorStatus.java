@@ -2,13 +2,16 @@ package com.edutools.tesigoapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "evaluation_indicator_status")
+@JsonIgnoreProperties({"evaluationIndicator", "student"})
 public class EvaluationIndicatorStatus implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +33,7 @@ public class EvaluationIndicatorStatus implements Serializable {
     private Integer studentId;
 
     @Column(name = "date")
-    private java.sql.Timestamp date;
+    private Timestamp date;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "evaluation_indicator_id")

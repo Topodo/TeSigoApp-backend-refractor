@@ -2,6 +2,7 @@ package com.edutools.tesigoapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "evaluation_indicator")
+@JsonIgnoreProperties({"learningObjective", "evaluationIndicatorStatuses"})
 public class EvaluationIndicator implements Serializable {
 
     private static final long serialVersionUID = 1L;

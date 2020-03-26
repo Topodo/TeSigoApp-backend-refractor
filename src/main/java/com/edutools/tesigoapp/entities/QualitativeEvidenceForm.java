@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "qualitative_evidence_form")
@@ -23,7 +24,7 @@ public class QualitativeEvidenceForm implements Serializable {
     private String description;
 
     @Column(name = "date")
-    private java.sql.Timestamp date;
+    private Timestamp date;
 
     @Column(name = "evidence_URL")
     private String evidenceUrl;

@@ -2,6 +2,7 @@ package com.edutools.tesigoapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "report")
+@JsonIgnoreProperties({"student"})
 public class Report implements Serializable {
 
     private static final long serialVersionUID = 1L;
