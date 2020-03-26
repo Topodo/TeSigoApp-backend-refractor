@@ -1,6 +1,7 @@
 package com.edutools.tesigoapp.rest;
 
 import com.edutools.tesigoapp.entities.Course;
+import com.edutools.tesigoapp.entities.Subject;
 import com.edutools.tesigoapp.entities.User;
 import com.edutools.tesigoapp.repositories.CourseRepository;
 import com.edutools.tesigoapp.repositories.UserRepository;
@@ -28,6 +29,16 @@ public class CourseService {
             return this.courseRepository.findById(id).get();
         }
         throw new ResourceNotFoundException("Course not found.");
+    }
+
+    // GET Method that returns all subjects of an specific course
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}/subjects")
+    @ResponseBody
+    public Iterable<Subject> getSubjects(@PathVariable("id") Integer id) {
+        Optional<Course> course = this.courseRepository.findById(id);
+        if (course.isPresent())
+            return course.get().getSubjects();
+        throw new ResourceNotFoundException("Course not found");
     }
 
     // POST Method that creates a new course and links to an user or a list of users

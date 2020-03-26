@@ -16,3 +16,20 @@ Request body
 	"name": "4to básico"
 }
 ```
+### 4) Get all subjects of an specific course (GET):
+`http://host:port/api/courses/{course_id}/subjects`
+### 5) Creates a new user using the current user permissions (POST):
+`http://host:port/api/users?current_user_id=id1`
+```javascript
+/* Request body
+ * roles = [profesor, admin, paradoctente, utp, pie]
+ */
+{
+	"firstName": "FirstName",
+	"lastNames": "LastNames",
+	"email": "email@gmail.com",
+	"photo": "base64 string",
+	"role": "profesor",
+	"firebaseUID": "user_id_provided_for_firebaseauth"
+}
+```

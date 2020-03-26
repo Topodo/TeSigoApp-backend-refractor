@@ -6,7 +6,10 @@ import com.edutools.tesigoapp.repositories.CourseRepository;
 import com.edutools.tesigoapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RestController
@@ -41,6 +44,18 @@ public class UserService {
             } else {
                 return user.getCourses();
             }
+        }
+        throw new ResourceNotFoundException("User not found.");
+    }
+
+    // POST Method that creates a new User if the current User had the Administrator permissions
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public User create(@RequestBody User user, @RequestParam(value = "current_user_id") Integer id) {
+        Optional<User> currentUser = this.userRepository.findById(id);
+        if (currentUser.isPresent() && currentUser.get().getRole().equals("admin")) {
+            return this.userRepository.save(user);
         }
         throw new ResourceNotFoundException("User not found.");
     }
