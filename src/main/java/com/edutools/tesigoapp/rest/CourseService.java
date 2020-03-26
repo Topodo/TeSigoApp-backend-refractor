@@ -9,9 +9,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/courses")
@@ -33,27 +31,21 @@ public class CourseService {
     }
 
     // POST Method that creates a new course and links to an user or a list of users
-    @RequestMapping(method = RequestMethod.POST, value = "/user/{user_id}")
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Iterable<Course> create(@RequestBody Course course,
-                                   @PathVariable("user_id") Integer userId,
-                                   @RequestParam(value = "users_ids", required = false) Integer[] usersIds) {
-        Optional<User> user = this.userRepository.findById(userId);
-        if (user.isPresent()) {
-            user.get().getCourses().add(course);
-            course.getUsers().add(user.get());
-            for (Integer id : usersIds) {
-                user = this.userRepository.findById(id);
-                if (user.isPresent()) {
-                    user.get().getCourses().add(course);
-                    course.getUsers().add(user.get());
-                }
+                                   @RequestParam(value = "users_ids") Integer[] usersIds) {
+        Optional<User> user;
+        for (Integer id : usersIds) {
+            user = this.userRepository.findById(id);
+            if (user.isPresent()) {
+                user.get().getCourses().add(course);
+                course.getUsers().add(user.get());
             }
-            course.setStudentsCount(0);
-            this.courseRepository.save(course);
-            return this.courseRepository.findCourseByUsersOrderByNameAsc(this.userRepository.findById(userId).get());
         }
-        throw new ResourceNotFoundException("User not found.");
+        course.setStudentsCount(0);
+        this.courseRepository.save(course);
+        return this.courseRepository.findCourseByUsersOrderByNameAsc(this.userRepository.findById(usersIds[0]).get());
     }
 }

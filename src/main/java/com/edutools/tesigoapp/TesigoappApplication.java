@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan({"com.edutools.tesigoapp", "com.edutools.tesigoapp.rest"})
-@EntityScan("com.edutools.tesigoapp.Entities")
+@EntityScan("com.edutools.tesigoapp.entities")
 @EnableJpaRepositories("com.edutools.tesigoapp.repositories")
 public class TesigoappApplication {
 
